@@ -1,13 +1,12 @@
 <script setup>
-import TimelineItemVue from '../components/TimelineItem.vue'
-import { generateTimelineItems } from '../function'
+import TimelineItem from '../components/TimelineItem.vue'
 
-const timelineItems = generateTimelineItems()
+defineProps(['timelineItems'])
 </script>
 <template>
   <div class="mt-7">
     <ul>
-      <TimelineItemVue
+      <TimelineItem
         v-for="timelineItem in timelineItems"
         :key="timelineItem.hour"
         :timeline-item="timelineItem"
