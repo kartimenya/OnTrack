@@ -2,7 +2,19 @@
 import BaseButton from './BaseButton.vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 
-defineProps(['selected', 'options', 'placeholder'])
+defineProps({
+  selected: Number,
+  options: {
+    required: true,
+    type: Array,
+    validator(options) {
+      return options.every(
+        ({ value, label }) => typeof value === 'number' && typeof label === 'string'
+      )
+    }
+  },
+  placeholder: { required: true, type: String }
+})
 </script>
 <template>
   <div class="flex gap-2">
