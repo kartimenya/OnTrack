@@ -8,6 +8,14 @@ export function isTimelineItemValid({ hour }) {
   return isHourValid(hour)
 }
 
+export function validateActivities(activities) {
+  return activities.every(isActivityValid)
+}
+
+export function isActivityValid(activity) {
+  return isString(activity) && activity.length > 0
+}
+
 export function validateTimelineItems(timelineItems) {
   return timelineItems.every(isTimelineItemValid)
 }
