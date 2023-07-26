@@ -16,8 +16,8 @@ export function validateActivities(activities) {
   return activities.every(isActivityValid)
 }
 
-export function isActivityValid(activity) {
-  return isString(activity) && activity.length > 0
+export function isActivityValid({ id, name, secondsToComplete }) {
+  return [isNotEmptyString(id), isNotEmptyString(name), isNumber(secondsToComplete)].every(Boolean)
 }
 
 export function validateTimelineItems(timelineItems) {
@@ -29,7 +29,7 @@ export function validateSelectOptions(options) {
 }
 
 function isSelectOptionValid({ value, label }) {
-  return isNumber(value) && isNotEmptyString(label)
+  return isNumber(value) || (isNotEmptyString(value) && isNotEmptyString(label))
 }
 
 export function isUndefinedOrNull(value) {
@@ -64,6 +64,6 @@ function isNull(value) {
   return value === null
 }
 
-function isUndefined(value) {
+export function isUndefined(value) {
   return value === undefined
 }
