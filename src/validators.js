@@ -36,6 +36,10 @@ export function isUndefinedOrNull(value) {
   return isUndefined(value) || isNull(value)
 }
 
+export function IsSelectValueValid(value) {
+  return isNotEmptyString(value) || isNumberOrNull(value)
+}
+
 export function isNumberOrNull(value) {
   return isNumber(value) || isNull(value)
 }
@@ -52,7 +56,7 @@ function isBetween(value, start, end) {
   return value >= start && value <= end
 }
 
-function isNumber(value) {
+export function isNumber(value) {
   return typeof value === 'number'
 }
 
@@ -60,7 +64,7 @@ function isString(value) {
   return typeof value === 'string'
 }
 
-function isNull(value) {
+export function isNull(value) {
   return value === null
 }
 
