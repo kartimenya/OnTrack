@@ -16,13 +16,13 @@ const props = defineProps({
   placeholder: { required: true, type: String }
 })
 
-function select(value) {
-  emit('select', normolizeSelectValue(value))
-}
-
 const emit = defineEmits({
   select: IsSelectValueValid
 })
+
+function select(value) {
+  emit('select', normolizeSelectValue(value))
+}
 
 const isNotSelected = computed(() => isUndefinedOrNull(props.selected))
 </script>
