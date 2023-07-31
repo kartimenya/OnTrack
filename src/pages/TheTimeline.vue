@@ -40,22 +40,28 @@ const emit = defineEmits({
   }
 })
 
+defineExpose({
+  scrollToHour
+})
+
 const timelineItemRefs = ref([])
 
 watchPostEffect(async () => {
   if (props.currentPage === PAGE_TIMELINE) {
     await nextTick()
-    scrollToCurrentTimelineItem()
+    scrollToHour(null, false)
   }
 })
 
-function scrollToCurrentTimelineItem() {
-  const currentHour = new Date().getHours()
+function scrollToHour(hour = null, isSmooth = true) {
+  hour ??= new Date().getHours()
 
-  if (currentHour === MIDNIGHT_HOUR) {
-    document.body.scrollIntoView({ behavior: 'smooth' })
+  const options = { behavior: isSmooth ? 'smooth' : 'instant' }
+
+  if (hour === MIDNIGHT_HOUR) {
+    document.body.scrollIntoView(options)
   } else {
-    timelineItemRefs.value[currentHour - 1].$el.scrollIntoView({ behavior: 'smooth' })
+    timelineItemRefs.value[hour - 1].$el.scrollIntoView(options)
   }
 }
 </script>
@@ -69,6 +75,7 @@ function scrollToCurrentTimelineItem() {
         :activities="activities"
         :activity-select-options="activitySelectOptions"
         ref="timelineItemRefs"
+        @scroll-to-hour="scrollToHour"
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
       />
     </ul>
