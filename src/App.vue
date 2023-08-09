@@ -49,23 +49,26 @@ function deleteActivity(activity) {
   activities.value.splice(activities.value.indexOf(activity), 1)
 }
 
-function setTimelineItemActivity(timelineItem, activity) {
-  timelineItem.activityId = activity.id
+function setTimelineItemActivity(timelineItem, activityId) {
+  timelineItem.activityId = activityId
 }
 
 function updateTimelineActivitySeconds(timelineItem, activitySeconds) {
   timelineItem.activitySeconds += activitySeconds
 }
 
-function setSecondsToComplete(activity, secondsToComplete) {
+function setActivitySecondsToComplete(activity, secondsToComplete) {
   activity.secondsToComplete = secondsToComplete
 }
 
 provide('updateTimelineActivitySeconds', updateTimelineActivitySeconds)
+provide('setTimelineItemActivity', setTimelineItemActivity)
+provide('setActivitySecondsToComplete', setActivitySecondsToComplete)
+provide('createActivity', createActivity)
+provide('deleteActivity', deleteActivity)
 provide('activitySelectOptions', activitySelectOptions.value)
 provide('periodSelectOptions', generatePeriodSelectOptions())
 provide('timelineItems', timelineItems.value)
-provide('activities', activities.value)
 </script>
 
 <template>
@@ -76,15 +79,8 @@ provide('activities', activities.value)
       :timeline-items="timelineItems"
       :current-page="currentPage"
       ref="timeline"
-      @set-timeline-item-activity="setTimelineItemActivity"
     />
-    <TheActivities
-      v-show="currentPage === PAGE_ACTIVITIES"
-      :activities="activities"
-      @create-activity="createActivity"
-      @delete-activity="deleteActivity"
-      @set-activity-second-to-complete="setSecondsToComplete"
-    />
+    <TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
   <TheNav :current-page="currentPage" @navigate="goTo($event)" />
