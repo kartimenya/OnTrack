@@ -7,6 +7,10 @@ import {
 } from './constans'
 import { isNull } from './validators'
 
+export function currentHour() {
+  return new Date().getHours()
+}
+
 export function formatSeconds(seconds) {
   const date = new Date()
 
