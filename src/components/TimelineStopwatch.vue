@@ -9,8 +9,8 @@ import {
 } from '../constans'
 import { isTimelineItemValid } from '../validators'
 import { currentHour, formatSeconds } from '../function'
-import { inject, ref } from 'vue'
-import { updateTimelineActivitySecondsKey } from '../key'
+import { ref } from 'vue'
+import { updateTimelineActivitySeconds } from '../timeline-items'
 
 const props = defineProps({
   timelineItem: {
@@ -19,8 +19,6 @@ const props = defineProps({
     validator: isTimelineItemValid
   }
 })
-
-const updateTimelineActivitySeconds = inject(updateTimelineActivitySecondsKey)
 
 const seconds = ref(props.timelineItem.activitySeconds)
 const isRunning = ref(false)
