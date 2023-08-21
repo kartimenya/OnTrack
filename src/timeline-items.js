@@ -1,6 +1,9 @@
 import { ref } from 'vue'
 import { activities } from './activities'
-import { HOURS_IN_DAY } from './constans'
+import { HOURS_IN_DAY, MIDNIGHT_HOUR } from './constans'
+import { currentHour } from './function'
+
+export const timelineItemRefs = ref([])
 
 export const timelineItems = ref(generateTimelineItems())
 
@@ -26,6 +29,16 @@ export function getTotalActivitySeconds(activity) {
       (totalSeconds, timelineItem) => Math.round(timelineItem.activitySeconds + totalSeconds),
       0
     )
+}
+
+export function scrollToCurrentHour(isSmooth = true) {
+  scrollToHour(currentHour(), isSmooth)
+}
+
+export function scrollToHour(hour, isSmooth = true) {
+  const el = hour === MIDNIGHT_HOUR ? document.body : timelineItemRefs.value[hour - 1].$el
+
+  el.scrollIntoView({ behavior: isSmooth ? 'smooth' : 'instant' })
 }
 
 function hasActivity(timelineItem, activity) {
